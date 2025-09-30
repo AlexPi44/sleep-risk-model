@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-\"\"\"check_nhanes_downloads.py
+"""check_nhanes_downloads.py
 
 Download NHANES XPT files for cycles 2005-2016, convert to CSV, and report variable presence.
 Idempotent: safe to re-run.
-\"\"\"
+"""
 
 import os
 import sys
