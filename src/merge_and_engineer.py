@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-\"\"\"merge_and_engineer.py
+"""merge_and_engineer.py
 
 Read converted CSVs from data/raw/<cycle>/csv/, harmonize, merge on SEQN, create target and features,
 and write data/processed/merged_clean.csv
-\"\"\"
+"""
 
 import os, sys, glob, json
 from pathlib import Path
