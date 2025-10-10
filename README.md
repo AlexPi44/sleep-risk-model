@@ -261,19 +261,13 @@ Otherwise labeled **low risk (0)** if sleep duration is 7-9 hours with no diagno
 | **Very few training samples (<1000)** | Check `reports/` for missing sleep variables |
 | **Download timeout** | Increase `REQUEST_TIMEOUT` in `check_nhanes_downloads.py` (line 56) |
 
-### Getting Help
-
-1. Check the [execution guide](docs/EXECUTION_GUIDE.md) for detailed instructions
-2. Review error messages in `reports/` directory
-3. Open an issue on GitHub with error logs
-
 ## Data Source
 
 **NHANES (National Health and Nutrition Examination Survey)**  
 - Provider: U.S. Centers for Disease Control and Prevention (CDC)
 - Cycles: 2005-2006, 2007-2008, 2009-2010, 2011-2012, 2013-2014, 2015-2016
 - License: Public domain, free for use
-- Documentation: https://www.cdc.gov/nchs/nhanes/index.htm
+- Documentation: https://www.cdc.gov/nchs/index.html
 
 ## Limitations
 
