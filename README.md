@@ -313,7 +313,7 @@ If you use this code in your research, please cite:
 
 ```bibtex
 @software{sleep_risk_model_2025,
-  author = {{Lightdrift Team}},
+  author = {{Alexandru Paicu}},
   title = {Sleep Disorder Risk Prediction using NHANES Data},
   year = {2025},
   url = {https://github.com/AlexPi44/sleep-risk-model},
@@ -323,7 +323,7 @@ If you use this code in your research, please cite:
 
 ## Contact
 
-**Project Maintainer:** Lightdrift Team  
+**Project Maintainer:** Alexandru Paicu
 **Email:** paicualexandru44@gmail.com  
 **GitHub:** https://github.com/AlexPi44/sleep-risk-model
 
