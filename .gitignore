@@ -1,2 +1,5 @@
 /data/
 /venv/
+/reports/
+__pycache__/
+/mlruns/
