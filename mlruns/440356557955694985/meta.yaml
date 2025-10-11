@@ -1,6 +1,0 @@
-artifact_location: file:///workspaces/sleep-risk-model/mlruns/440356557955694985
-creation_time: 1760183678305
-experiment_id: '440356557955694985'
-last_update_time: 1760183678305
-lifecycle_stage: active
-name: xgboost_optuna_sleep_risk
