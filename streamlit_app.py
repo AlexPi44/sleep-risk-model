@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""streamlit_app.py 
+"""streamlit_app.py
 
 Sleep Disorder Risk Calculator UI with dynamic feature loading.
 """
@@ -152,4 +152,51 @@ if st.button("Calculate Risk", type="primary", use_container_width=True):
             )
 
         with col2:
-            risk_category = "HIGH RISK" if risk_prob >= 0.5 else "LOW
+            risk_category = "HIGH RISK" if risk_prob >= 0.5 else "LOW RISK"
+            st.metric(
+                "Risk Category",
+                risk_category,
+                help="Based on 50% threshold",
+            )
+
+        st.divider()
+        st.subheader("Interpretation")
+
+        if risk_prob >= 0.5:
+            st.warning(
+                f"⚠️ **High Risk**: Your profile suggests elevated sleep disorder risk ({risk_prob*100:.1f}%). "
+                "Consider consulting a sleep specialist for evaluation and polysomnography testing."
+            )
+        else:
+            st.info(
+                f"✓ **Low Risk**: Your profile suggests lower sleep disorder risk ({risk_prob*100:.1f}%). "
+                "Maintain healthy sleep habits (7-9 hours/night, regular exercise, stress management)."
+            )
+
+        # Feature importance note
+        st.divider()
+        st.subheader("About This Model")
+        st.markdown(
+            """
+            **Model Type:** XGBoost classifier trained on NHANES data (2005-2016)
+            
+            **Features Used:**
+            - Age, Sex (non-modifiable)
+            - BMI, Exercise, Diet (calories, fiber, sugar, caffeine), Alcohol, Smoking, Depression, Blood Pressure
+            
+            **Limitations:**
+            - This is a **risk estimate**, NOT a diagnosis
+            - Based on U.S. population data; may not generalize to other populations
+            - Self-reported measures may have recall bias
+            - Should be used alongside clinical evaluation
+            
+            **Data Source:** CDC NHANES public-use datasets
+            
+            **For sleep concerns:** Consult a physician or sleep medicine specialist for proper evaluation.
+            """
+        )
+
+    except Exception as e:
+        st.error(f"Error making prediction: {e}")
+        import traceback
+        st.code(traceback.format_exc())
