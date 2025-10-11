@@ -1,3 +1,4 @@
+
 # Sleep Disorder Risk Prediction
 
 Predict sleep disorder risk using lifestyle and health features from NHANES survey data (2005-2016).
@@ -19,14 +20,15 @@ Predict sleep disorder risk using lifestyle and health features from NHANES surv
 - [Citation](#citation)
 - [Contact](#contact)
 
+
 ## Overview
 
 This project predicts **high risk** vs **low risk** for sleep disorders using machine learning on NHANES (National Health and Nutrition Examination Survey) data. It provides:
 
 - Automated data pipeline for NHANES cycles 2005-2016
 - Feature engineering from lifestyle and health metrics
-- XGBoost classifier with SHAP explainability
-- Interactive Streamlit web interface for risk assessment
+- XGBoost classifier with Optuna hyperparameter tuning and MLflow logging
+- Interactive Streamlit web interface for risk assessment (see `app/streamlit_app.py`)
 
 **⚠️ Disclaimer:** This tool provides risk estimates for research purposes only. It is **not** a medical diagnostic tool and should not replace clinical evaluation.
 
@@ -38,6 +40,7 @@ This project predicts **high risk** vs **low risk** for sleep disorders using ma
 - **Explainability**: SHAP values for feature importance analysis
 - **Web Interface**: User-friendly Streamlit app for predictions
 - **Reproducible**: Version-pinned dependencies and fixed random seeds
+
 
 ## Installation
 
@@ -75,120 +78,82 @@ Verify installation:
 python -c "import pyreadstat; print('✓ pyreadstat installed successfully')"
 ```
 
-### Step 4: Create Directories
-
-```bash
-mkdir -p data/raw data/processed reports models
-```
 
 ## Usage
 
-### Quick Start (Automated Pipeline)
+### Recommended Pipeline
 
-Run the entire pipeline with one command:
+#### 1. Prepare Data
+
+Run the full data preparation pipeline (downloads, merges, feature engineering):
 
 ```bash
 python notebooks/01_data_prep.py
 ```
 
 This will:
-1. Download NHANES data (~10-30 minutes)
-2. Merge and engineer features (~1-2 minutes)
-3. Train XGBoost model (~1-2 minutes)
-4. Save model artifacts to `models/`
+- Download NHANES data (~10-30 minutes)
+- Merge and engineer features (~1-2 minutes)
+- Output: `data/processed/merged_clean.csv`
 
-Then launch the web interface:
+#### 2. Tune and Train Model
+
+Run Optuna hyperparameter tuning and train the best XGBoost model:
 
 ```bash
-streamlit run streamlit_app.py
+python src/tune_xgb_optuna.py --n-trials 40 --tracking-uri http://localhost:5000 --experiment sleep_risk_optuna
 ```
 
-Open browser to `http://localhost:8501`
+This will:
+- Tune and train the model
+- Save model artifacts to `models/`:
+  - `xgb_best_model.pkl` (final model)
+  - `feature_names.pkl` (feature order)
+  - `xgb_cat_maps.json` (categorical mappings)
+
+#### 3. Launch the Web App
+
+```bash
+streamlit run app/streamlit_app.py
+```
+
+Open your browser to `http://localhost:8501`.
 
 ---
 
-### Step-by-Step (Manual Execution)
+### Manual Steps (Advanced)
 
-#### 1. Download NHANES Data
+You can also run the following scripts directly for more control:
 
-```bash
-python src/check_nhanes_downloads.py --out data/raw --report reports --convert
-```
+- Download NHANES data:  
+  `python src/check_nhanes_downloads.py --out data/raw --report reports --convert`
+- Merge and engineer features:  
+  `python src/merge_and_engineer.py --input data/raw --output data/processed/merged_clean.csv`
 
-**Time:** 10-30 minutes (downloads ~500MB)  
-**Output:** XPT files and converted CSVs in `data/raw/<cycle>/`, reports in `reports/`
-
-**Verify download:**
-```bash
-cat reports/aggregate_report.json | python -m json.tool
-```
-
-#### 2. Merge Cycles and Engineer Features
-
-```bash
-python src/merge_and_engineer.py --input data/raw --output data/processed/merged_clean.csv
-```
-
-**Time:** 1-2 minutes  
-**Output:** `data/processed/merged_clean.csv` (~40,000 rows, 15 columns)
-
-**Verify output:**
-```bash
-python -c "import pandas as pd; df=pd.read_csv('data/processed/merged_clean.csv'); print(f'Shape: {df.shape}')"
-```
-
-#### 3. Train Model
-
-**Option A: Jupyter Notebook (Interactive)**
-```bash
-jupyter notebook notebooks/01_data_prep.ipynb
-```
-Run cells sequentially from top to bottom.
-
-**Option B: Python Script (Automated)**
-```bash
-python notebooks/01_data_prep.py
-```
-
-**Time:** 1-2 minutes  
-**Output:** Model artifacts in `models/`:
-- `sleep_risk_model.pkl` - Trained XGBoost classifier
-- `feature_scaler.pkl` - StandardScaler for features
-- `feature_names.pkl` - Feature order for predictions
-
-#### 4. Run Web Interface
-
-```bash
-streamlit run streamlit_app.py
-```
-
-Navigate to `http://localhost:8501` in your browser.
-
-**Usage:**
-1. Enter your health information (age, BMI, exercise, diet, etc.)
-2. Click "Calculate Risk"
-3. View risk percentage and interpretation
 
 ## Project Structure
 
 ```
 sleep-risk-model/
+├── app/
+│   └── streamlit_app.py           # Streamlit web interface
 ├── src/
 │   ├── check_nhanes_downloads.py  # Data downloader
-│   └── merge_and_engineer.py      # Feature engineering
+│   ├── merge_and_engineer.py      # Feature engineering
+│   └── tune_xgb_optuna.py         # Optuna tuning & training
 ├── notebooks/
 │   ├── 01_data_prep.ipynb         # Jupyter notebook
-│   └── 01_data_prep.py            # Python script version
+│   └── 01_data_prep.py            # Python script version (full pipeline)
 ├── data/
 │   ├── raw/                       # Downloaded NHANES files
 │   └── processed/                 # Merged dataset
 ├── models/                        # Trained model artifacts
 ├── reports/                       # Download reports
-├── streamlit_app.py               # Web interface
 ├── requirements.txt               # Python dependencies
 ├── LICENSE                        # MIT License
 └── README.md                      # This file
 ```
+
 
 ## Model Details
 
@@ -232,6 +197,7 @@ Otherwise labeled **low risk (0)** if sleep duration is 7-9 hours with no diagno
 - **Depression:** Sum of 9 PHQ-9 questionnaire items
 - **Alcohol:** Daily drinks × 7 = weekly consumption
 
+
 ## Results
 
 ### Model Performance
@@ -250,6 +216,7 @@ Otherwise labeled **low risk (0)** if sleep duration is 7-9 hours with no diagno
 3. BMI
 4. Sleep duration (embedded in target)
 5. Blood pressure
+
 
 ## Troubleshooting
 
@@ -280,6 +247,7 @@ Otherwise labeled **low risk (0)** if sleep duration is 7-9 hours with no diagno
 - **Missing data** - ~70% of samples dropped due to incomplete sleep questionnaires
 - **Class imbalance** - Consider using SMOTE or class weights for production use
 
+
 ## Contributing
 
 Contributions are welcome! Please:
@@ -303,11 +271,13 @@ pip install pytest black flake8  # Development dependencies
 pytest tests/
 ```
 
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 NHANES data is public domain courtesy of the CDC.
+
 
 ## Citation
 
@@ -322,6 +292,7 @@ If you use this code in your research, please cite:
   version = {1.0.0}
 }
 ```
+
 
 ## Contact
 
