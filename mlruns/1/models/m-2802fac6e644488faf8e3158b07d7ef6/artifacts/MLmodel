@@ -1,0 +1,22 @@
+artifact_path: /workspaces/sleep-risk-model/mlruns/1/models/m-2802fac6e644488faf8e3158b07d7ef6/artifacts
+flavors:
+  python_function:
+    data: model.xgb
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.12.1
+  xgboost:
+    code: null
+    data: model.xgb
+    model_class: xgboost.sklearn.XGBClassifier
+    model_format: xgb
+    xgb_version: 1.7.6
+mlflow_version: 3.4.0
+model_id: m-2802fac6e644488faf8e3158b07d7ef6
+model_size_bytes: 2149256
+model_uuid: m-2802fac6e644488faf8e3158b07d7ef6
+prompts: null
+run_id: 8858033c06044cd9b09a6fafb7be9a9b
+utc_time_created: '2025-10-11 12:40:56.968427'

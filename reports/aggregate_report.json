@@ -1,0 +1,15 @@
+{
+  "cycles": [
+    "reports/2005_2006_report.json",
+    "reports/2007_2008_report.json",
+    "reports/2009_2010_report.json",
+    "reports/2011_2012_report.json",
+    "reports/2013_2014_report.json",
+    "reports/2015_2016_report.json"
+  ],
+  "summary": {
+    "checked": 60,
+    "valid": 60,
+    "invalid": 0
+  }
+}

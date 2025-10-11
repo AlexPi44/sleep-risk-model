@@ -1,0 +1,14 @@
+artifact_uri: file:///workspaces/sleep-risk-model/mlruns/440356557955694985/5f6c9f2cf3044df991852b219b9025ca/artifacts
+end_time: 1760185457483
+entry_point_name: ''
+experiment_id: '440356557955694985'
+lifecycle_stage: active
+run_id: 5f6c9f2cf3044df991852b219b9025ca
+run_name: amusing-panda-453
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1760185457369
+status: 3
+tags: []
+user_id: codespace

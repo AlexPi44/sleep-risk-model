@@ -33,7 +33,7 @@ This project predicts **high risk** vs **low risk** for sleep disorders using ma
 ## Features
 
 - **Automated Data Pipeline**: Downloads and processes 6 NHANES cycles automatically
-- **Feature Engineering**: 13 features including BMI, exercise, diet, blood pressure, depression score
+- **Feature Engineering**: 14 features including cycle, BMI, exercise, diet, blood pressure, depression score
 - **Model Performance**: ROC-AUC ~0.75-0.80 on test set
 - **Explainability**: SHAP values for feature importance analysis
 - **Web Interface**: User-friendly Streamlit app for predictions
@@ -130,7 +130,7 @@ python src/merge_and_engineer.py --input data/raw --output data/processed/merged
 ```
 
 **Time:** 1-2 minutes  
-**Output:** `data/processed/merged_clean.csv` (~40,000 rows, 14 columns)
+**Output:** `data/processed/merged_clean.csv` (~40,000 rows, 15 columns)
 
 **Verify output:**
 ```bash
@@ -201,7 +201,9 @@ Participants are labeled **high risk (1)** if any of:
 
 Otherwise labeled **low risk (0)** if sleep duration is 7-9 hours with no diagnosis.
 
-### Features (13 total)
+### Features (14 total)
+
+**Cycle:** NHANES survey cycle (categorical: 2005-2006, 2007-2008, ..., 2015-2016)
 
 **Non-modifiable:**
 - Age, Sex
