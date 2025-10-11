@@ -1,5 +1,29 @@
+# Ignore data and model artifacts
+data/
+models/
+mlruns/
+
+# Ignore large file types
+*.pkl
+*.csv
+*.xpt
+*.XPT
+*.h5
+*.hdf5
+*.joblib
+*.npz
+*.npy
+
+# Ignore notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore OS and editor files
+.DS_Store
+__pycache__/
+*.pyc
+venv/
+env/
+*.log
 /data/
 /venv/
-/reports/
-__pycache__/
-/mlruns/
+
