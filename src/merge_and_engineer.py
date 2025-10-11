@@ -183,7 +183,6 @@ def mean_col(df, cols):
     present = [c for c in cols if c in df.columns]
     if not present:
         return pd.Series([np.nan] * len(df), index=df.index, dtype="float64")
-    # mean(axis=1) calculates row-wise mean, skipna=True ignores NaN
     return df[present].mean(axis=1, skipna=True)
 
 
