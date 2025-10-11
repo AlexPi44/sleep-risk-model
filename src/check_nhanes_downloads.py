@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """check_nhanes_downloads.py 
 
 Download NHANES XPT files for cycles 2005-2016, convert to CSV, and report variable presence.
@@ -66,7 +67,7 @@ KEY_VARIABLES = {
     "SMQ": ["SMQ040"],
 }
 
-BASE_URL = "https://wwwn.cdc.gov/Nchs/Nhanes"
+BASE_URL = "https://wwwn.cdc.gov/nchs/nhanes"
 REQUEST_TIMEOUT = 30
 MAX_RETRIES = 3
 RETRY_SLEEP = 2.0
