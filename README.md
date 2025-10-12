@@ -6,7 +6,7 @@ Predict sleep disorder risk using lifestyle and health features from NHANES surv
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-## The Demo of the model can be found and tested via HuggingFace at: https://agalexiul-sleep-risk-model.hf.space/
+## The model can be found and tested via HuggingFace at: https://agalexiul-sleep-risk-model.hf.space/
 
 ## Table of Contents
 - [Overview](#overview)
