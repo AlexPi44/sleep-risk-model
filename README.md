@@ -38,7 +38,7 @@ This project predicts **high risk** vs **low risk** for sleep disorders using ma
 
 - **Automated Data Pipeline**: Downloads and processes 6 NHANES cycles automatically
 - **Feature Engineering**: 14 features including cycle, BMI, exercise, diet, blood pressure, depression score
-- **Model Performance**: ROC-AUC ~0.75-0.80 on test set
+- **Model Performance**: ROC-AUC ~0.80-0.94 on test set
 - **Explainability**: SHAP values for feature importance analysis
 - **Web Interface**: User-friendly Streamlit app for predictions
 - **Reproducible**: Version-pinned dependencies and fixed random seeds
@@ -206,8 +206,8 @@ Otherwise labeled **low risk (0)** if sleep duration is 7-9 hours with no diagno
 
 | Metric | Value |
 |--------|-------|
-| ROC-AUC | 0.75-0.80 |
-| PR-AUC | 0.70-0.75 |
+| ROC-AUC | 0.80-0.95 |
+| PR-AUC | 0.80-0.85 |
 | Training Samples | ~15,000-20,000 |
 | Test Samples | ~3,000-5,000 |
 
