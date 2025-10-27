@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """streamlit_app.py
-
 Sleep Disorder Risk Calculator UI with dynamic feature loading.
 """
 
@@ -49,17 +48,8 @@ if load_error:
 st.success("✓ Model loaded successfully")
 
 # Input section
-
 st.header("Your Information")
 col1, col2 = st.columns(2)
-# Add cycle selectbox for the first feature
-cycle = st.selectbox(
-    "NHANES Cycle",
-    ["2005_2006", "2007_2008", "2009_2010", "2011_2012", "2013_2014", "2015_2016"],
-    index=0
-)
-# Encode cycle as integer code (matching training)
-cycle_code = ["2005_2006", "2007_2008", "2009_2010", "2011_2012", "2013_2014", "2015_2016"].index(cycle)
 
 with col1:
     age = st.number_input("Age (years)", min_value=18, max_value=120, value=45)
@@ -111,7 +101,6 @@ if st.button("Calculate Risk", type="primary", use_container_width=True):
     try:
         # Build feature dict in same order as feature_names
         input_dict = {
-            "cycle": cycle_code,
             "age": age,
             "sex": 1 if sex == "Male" else 2,
             "BMI": bmi,
@@ -126,12 +115,18 @@ if st.button("Calculate Risk", type="primary", use_container_width=True):
             "systolic_bp": systolic,
             "diastolic_bp": diastolic,
         }
+        
+        # Add cycle if model expects it (use encoded integer - most recent cycle)
+        if 'cycle' in feature_names:
+            # Cycle encoding: 0=2005_2006, 1=2007_2008, 2=2009_2010, 3=2011_2012, 4=2013_2014, 5=2015_2016
+            input_dict['cycle'] = 5  # Default to most recent (2015_2016)
 
         # Check that all required features are present
         missing_features = [f for f in feature_names if f not in input_dict]
         if missing_features:
             st.error(f"Missing features in input: {missing_features}")
             st.stop()
+        
         # Order inputs by feature_names (important for model correctness)
         X_ordered = np.array([[input_dict[f] for f in feature_names]])
 
