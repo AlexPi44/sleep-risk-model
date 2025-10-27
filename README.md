@@ -37,7 +37,7 @@ This project predicts **high risk** vs **low risk** for sleep disorders using ma
 ## Features
 
 - **Automated Data Pipeline**: Downloads and processes 6 NHANES cycles automatically
-- **Feature Engineering**: 14 features including cycle, BMI, exercise, diet, blood pressure, depression score
+- **Feature Engineering**: 13 features including BMI, exercise, diet, blood pressure, depression score
 - **Model Performance**: ROC-AUC ~0.84-0.94 on test set
 - **Explainability**: SHAP values for feature importance analysis
 - **Web Interface**: User-friendly Streamlit app for predictions
@@ -168,9 +168,7 @@ Participants are labeled **high risk (1)** if any of:
 
 Otherwise labeled **low risk (0)** if sleep duration is 7-9 hours with no diagnosis.
 
-### Features (14 total)
-
-**Cycle:** NHANES survey cycle (categorical: 2005-2006, 2007-2008, ..., 2015-2016)
+### Features (13 total)
 
 **Non-modifiable:**
 - Age, Sex
@@ -228,7 +226,7 @@ Otherwise labeled **low risk (0)** if sleep duration is 7-9 hours with no diagno
 | **`FileNotFoundError: XPT file not found`** | Run downloader: `python src/check_nhanes_downloads.py ...` |
 | **`404` errors during download** | Check CDC NHANES website: https://www.cdc.gov/nchs/nhanes/ |
 | **`merged_clean.csv not found`** | Run merge script: `python src/merge_and_engineer.py ...` |
-| **Streamlit shows "No model found"** | Verify 3 files exist in `models/` directory |
+| **Streamlit shows "No model found"** | Verify 2 files exist in `models/` directory |
 | **Very few training samples (<1000)** | Check `reports/` for missing sleep variables |
 | **Download timeout** | Increase `REQUEST_TIMEOUT` in `check_nhanes_downloads.py` (line 56) |
 
